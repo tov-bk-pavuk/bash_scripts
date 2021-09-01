@@ -1,0 +1,4 @@
+#!/bin/bash
+# Комментарий
+echo 'Этот скрипт написал ты!'
+cat .gitignore > .gitignore_1

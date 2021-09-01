@@ -1,0 +1,31 @@
+#!/bin/bash
+echo -n 'Введите имя проекта: '
+read name
+mkdir $name
+cd ./$name ; virtualenv venv -p python3.9 # Можно спросить какую версию Питончика ставить.
+source venv/bin/activate
+pip install django flake8 flake8-import-order flake8-builtins flake8-print flake8-django
+pip freeze > requirements.txt
+cat ~/scripts/.gitignore > .gitignore
+cat ~/scripts/.flake8 > .flake8
+cat ~/scripts/.travis.yml > .travis.yml
+echo 'This is the educational project for study python progmmaing.' > README.MD
+django-admin startproject $name .
+echo -n 'Введите имя приложения: '
+read name
+python manage.py startapp $name
+git init
+git add .
+git commit -am "first commit"
+python manage.py runserver
+echo '
+1. Добавь в settings.py: import os
+2. Замени на SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "секретный ключ")
+3. Зарегистрируй в INSTALLED_APPS приложение  <имя>.apps.<Имя>Config в settings.py
+4. Создай пустой репозиторий на GitHub https://github.com/new
+5. Скопируй ssh на репозиторий.
+5. Напиши в консоли с venv-ом:
+git branch -M main
+git remote add origin <ссылка_на_репозиторий>
+git push -u origin main
+ '
